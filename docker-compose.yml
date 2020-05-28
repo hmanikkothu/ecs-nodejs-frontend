@@ -1,0 +1,14 @@
+version: "3"
+services:
+  ecsdemo-frontend:
+    environment:
+      - BACKEND_SVC_URL=http://ecs-nodejs-backend.service:3000
+    image: hmanikkothu/ecs-nodejs-frontend
+    ports:
+      - "3000:3000"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: ecs-nodejs-frontend
+        awslogs-region: ${AWS_REGION}
+        awslogs-stream-prefix: ecs-nodejs-frontend
