@@ -1,6 +1,6 @@
 version: "3"
 services:
-  ecsdemo-frontend:
+  ecs-nodejs-frontend:
     environment:
       - BACKEND_SVC_URL=http://ecs-nodejs-backend.service:3000
     image: hmanikkothu/ecs-nodejs-frontend

@@ -6,14 +6,17 @@ var got = require("got");
 var fs = require("fs");
 //var code_hash = fs.readFileSync("code_hash.txt", "utf8");
 //console.log(code_hash);
-console.log("The IPADDRESS is:", process.env.IP);
-console.log("The message is:", process.env.AZ);
+
 //console.log('The hash is: %s', code_hash);
 
 var ipaddress = process.env.IP || "no-ip";
 var az = process.env.AZ || "none";
 var message = process.env.AZ;
 var BACKEND_SVC_URL = process.env.BACKEND_SVC_URL;
+
+console.log("The IPADDRESS is:", ipaddress);
+console.log("The AZ is:", az);
+console.log("The BACKEND_SVC_URL is:", BACKEND_SVC_URL);
 
 // morgan: generate apache style logs to the console
 var morgan = require("morgan");
@@ -55,16 +58,14 @@ function sendResponse(res) {
     process.uptime() +
     "ms";
 
-  (async () => {
-    try {
-      const response = await got(BACKEND_SVC_URL);
+  got(BACKEND_SVC_URL, {})
+    .then((response) => {
       console.log(response.body);
       res.send(msg + "\n Response from BE: " + response.body);
-    } catch (error) {
+    })
+    .catch((error) => {
       console.log(error.response.body);
-      //=> 'Internal server error ...'
-    }
-  })();
+    });
 }
 
 // export the server to make tests work
